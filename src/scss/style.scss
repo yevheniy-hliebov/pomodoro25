@@ -1,0 +1,311 @@
+@use "sass:math";
+@import "reset";
+@import url("https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900&display=swap");
+
+@function rem($value) {
+  $remValue: math.div($value, 16)+rem;
+  @return $remValue;
+}
+
+$white: #fff;
+$red: #BA4949;
+$darkcyan: #38858A;
+$blue: #397097;
+
+body {
+  position: relative;
+  background-image: url('../../public/bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-size: rem(16);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+.pomodoro {
+  user-select: none;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: rem(360);
+  border-radius: rem(8);
+
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: rem(25);
+
+  gap: rem(30);
+
+  box-shadow: 5px 5px 10px 0px rgba(53, 53, 53, 0.1);
+
+  &__pomodoroIntervals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: rem(16);
+  }
+
+  transition: background-color 0.3s ease;
+
+  &.focus {
+    background-color: $red;
+  }
+
+  &.short {
+    background-color: $darkcyan;
+  }
+
+  &.long {
+    background-color: $blue;
+  }
+
+  &__btn-pomodoroInterval {
+    display: flex;
+    justify-content: center;
+    font-size: rem(24);
+    padding: rem(5) rem(10);
+    border: rem(2) solid $white;
+    border-radius: rem(5);
+    color: $white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover,
+    &.selected {
+      color: #000;
+      background-color: $white;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    .focus & {
+
+      &:hover,
+      &.selected {
+        color: $red;
+      }
+    }
+
+    .short & {
+
+      &:hover,
+      &.selected {
+        color: $darkcyan;
+      }
+    }
+
+    .long & {
+
+      &:hover,
+      &.selected {
+        color: $blue;
+      }
+    }
+  }
+
+  &__timer {
+    width: rem(200);
+    height: rem(200);
+    border-radius: 50%;
+    border: rem(3.5) solid $white;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: $white;
+    font-size: rem(58);
+    font-weight: 300;
+  }
+
+  // .pomodoro__actions
+
+  &__actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    gap: rem(20);
+  }
+
+  // .pomodoro__evolution
+
+  &__evolution {
+    display: flex;
+    align-items: center;
+    gap: rem(21);
+  }
+
+  // .pomodoro__evolution-circle
+
+  &__evolution-circle {
+    width: rem(24);
+    height: rem(24);
+    border-radius: 50%;
+    border: rem(2) solid $white;
+
+    .passed {
+      background-color: $white;
+    }
+  }
+
+  // .pomodoro__counts
+
+  &__counts {
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+  }
+
+  // .pomodoro__count
+
+  &__count {
+    font-size: rem(28);
+    color: $white;
+  }
+
+  // .pomodoro__name-pomodoroInterval
+
+  &__name-pomodoroInterval {
+    font-size: rem(28);
+    color: $white;
+  }
+
+  &__btn-question {
+    margin-top: auto;
+    cursor: pointer;
+
+    &:hover + .pomodoro__explanation {
+      opacity: 1;
+    }
+  }
+
+  &__explanation {
+    pointer-events: none;
+    position: absolute;
+    bottom: rem(80);
+    left: rem(20);
+    right: rem(20);
+
+    padding: rem(24);
+    background-color: $white;
+    border-radius: rem(20);
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.3);
+
+    color: $red;
+
+    opacity: 0;
+    transition: all 0.3s ease;
+
+    & .title {
+      font-size: rem(24);
+      font-weight: 500;
+
+      &:not(:last-child) {
+        margin-bottom: rem(20);
+      }
+    }
+
+    & .text {
+      font-size: rem(20);
+
+      p:not(:last-child) {
+        margin-bottom: rem(20);
+      }
+    }
+  }
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (max-width: 365px) {
+  .pomodoro {
+    padding: rem(15);
+    gap: rem(20);
+  
+    &__pomodoroIntervals {
+      gap: rem(15);
+    }
+  
+    &__btn-pomodoroInterval {
+      font-size: rem(18);
+    }
+  
+    &__timer {
+      width: rem(180);
+      height: rem(180);
+      font-size: rem(58);
+    }
+    
+    &__actions {
+      gap: rem(15);
+    }
+
+    &__evolution {
+      gap: rem(15);
+    }
+    
+    &__count {
+      font-size: rem(20);
+    }
+  
+    &__name-pomodoroInterval {
+      font-size: rem(24);
+    }
+    
+    &__explanation {
+      bottom: rem(75);
+      left: rem(15);
+      right: rem(15);
+  
+      padding: rem(20);
+  
+      & .title {
+        font-size: rem(18);
+  
+        &:not(:last-child) {
+          margin-bottom: rem(10);
+        }
+      }
+  
+      & .text {
+        font-size: rem(16);
+  
+        p:not(:last-child) {
+          margin-bottom: rem(10);
+        }
+      }
+    }
+  }
+}
